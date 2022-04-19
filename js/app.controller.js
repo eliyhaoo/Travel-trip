@@ -28,8 +28,8 @@ function onInit() {
 }
 
 function getQueryParms(){
+    if (!gCurrLoc) return
     const urlSearchParams= new URLSearchParams(window.location.search);
-    if (!urlSearchParams) return
     console.log('queryStrings',queryStrings);
     const queryParams = Object.fromEntries(urlSearchParams.entries())
     const {lat,lng} =queryParams
