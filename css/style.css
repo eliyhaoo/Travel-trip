@@ -19,6 +19,19 @@ background-color: beige;
     
 }
 
+@media(max-width:600px){
+    .main-container{
+        width: fit-content;
+        height: fit-content;
+        grid-template-rows: 60% 300px;
+        grid-template-columns: 50% 50%;
+        grid-template-areas: 
+        "map map"
+        "locations weather";
+    }
+
+}
+
 header .header-container {
     border-bottom: 2px solid black
 }
