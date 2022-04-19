@@ -11,7 +11,7 @@ window.onGo = onGo
 window.onDelete = onDelete
 
 
-renderLocations([{ name: 'rrrr', lat: '40', lng: '30' }])
+// renderLocations([{ name: 'rrrr', lat: '40', lng: '30' id:11}])
 
 function onInit() {
     mapService.initMap()
