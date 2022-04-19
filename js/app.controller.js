@@ -62,7 +62,7 @@ function onPanTo() {
 }
 
 function renderLocations(locs) {
-    let eldiv = document.querySelector('.saved-locations-container')
+    let elContainer = document.querySelector('.saved-locations-container')
     let strHTML = ''
     locs.forEach(location => {
         strHTML += `<li>${location.name} x:${location.lat}  y:${location.lng}
