@@ -23,8 +23,10 @@ function onInit() {
     .then(() => {})
     .catch(() => console.log("Error: cannot init map"));
   getLocsForDisplay();
-  const {lat,lng}= new URLSearchParams(window.location.search);
-  console.log(lat,lng);
+  const queryStrings= new URLSearchParams(window.location.search);
+  console.log('queryStrings',queryStrings);
+  const {lat,lng} =queryStrings
+  console.log('lat,lng',lat,lng);
   mapService.panTo(lat,lng)
 }
 
@@ -65,7 +67,7 @@ function onMyLocation() {
 }
 
 function onCopy() {
-  const linkSTR = `https://eliyhaoo.github.io/Travel-trip/`;
+  const linkSTR = `https://eliyhaoo.github.io/Travel-trip/?lat=32.0749831&lng=34.9120554`;
 
   navigator.clipboard.writeText(linkSTR);
 }
