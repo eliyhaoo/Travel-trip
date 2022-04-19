@@ -1,4 +1,4 @@
-
+alert('babaaaa')
 
 export const mapService = {
     initMap,
