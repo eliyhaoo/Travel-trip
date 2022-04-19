@@ -23,11 +23,16 @@ function onInit() {
     .then(() => {})
     .catch(() => console.log("Error: cannot init map"));
   getLocsForDisplay();
-  const queryStrings= new URLSearchParams(window.location.search);
-  console.log('queryStrings',queryStrings);
-  const {lat,lng} =queryStrings
-  console.log('lat,lng',lat,lng);
-  mapService.panTo(lat,lng)
+    getQueryParms()
+}
+
+function getQueryParms(){
+    const urlSearchParams= new URLSearchParams(window.location.search);
+    console.log('queryStrings',queryStrings);
+    const queryParams = Object.fromEntries(urlSearchParams.entries())
+    const {lat,lng} =queryParams
+    console.log('lat,lng',lat,lng);
+    mapService.panTo(lat,lng)
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -68,6 +73,7 @@ function onMyLocation() {
 
 function onCopy() {
   const linkSTR = `https://eliyhaoo.github.io/Travel-trip/?lat=32.0749831&lng=34.9120554`;
+  console.log(linkSTR);
 
   navigator.clipboard.writeText(linkSTR);
 }
