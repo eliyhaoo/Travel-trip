@@ -6,6 +6,12 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.renderLocations = renderLocations;
+window.onGo = onGo
+window.onDelete = onDelete
+
+
+renderLocations([{name:'rrrr', lat:'40' , lng:'30'}])
 
 function onInit() {
     mapService.initMap()
@@ -53,4 +59,25 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
+}
+
+function renderLocations(locs) {
+    let eldiv = document.querySelector('.saved-locations-container')
+    let strHTML = ''
+    locs.forEach(location=>{
+        strHTML+= `<li>${location.name} x:${location.lat}  y:${location.lng}
+        <button onclick="onGo()">go!</button>  <button onclick="onDelete(location.id)">delete</button></li>`
+        console.log(location.name)
+    })
+    eldiv.innerHTML=strHTML
+}
+
+function onGo(){
+    console.log(1)
+}
+function onDelete(id){
+//    deleteLocation(id)
+//    renderLocations(locService.getLocations())
+   locService.getLocs()
+   .then(res=>renderLocations(res))
 }
