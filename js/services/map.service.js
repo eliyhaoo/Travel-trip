@@ -5,6 +5,7 @@ export const mapService = {
     panTo
 }
 
+
 var gMap;
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
@@ -18,8 +19,16 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 zoom: 15
             })
             console.log('Map!', gMap);
+            gMap.addListener("click", (e) => onClickedLocation(e.latLng, gMap))
         })
 }
+
+function onClickedLocation(latLng,map){
+    const locationName = prompt("Enter a name");
+  const marker = placeMarkerAndPanTo(latLng, locationName, map)
+  //later remember to keep the markers in an array or to simply delete all
+}
+
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({
@@ -34,6 +43,17 @@ function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng);
     gMap.panTo(laLatLng);
 }
+
+function placeMarkerAndPanTo(latLng, locationName, map = gMap) {
+    const marker = new google.maps.Marker({
+      position: latLng,
+      map,
+      title: locationName,
+    });
+    map.panTo(latLng);
+    return marker
+   
+  }
 
 
 
