@@ -1,0 +1,69 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+margin:0;
+background-color: beige;
+}
+
+.main-container {
+    padding:20px;
+    border: 2px solid black;
+    display:grid;
+    grid-template: 60% 40%/40% 60% ;
+    grid-template-areas: 
+    "weather map"
+    "locations map";
+    column-gap: 15px;
+    
+}
+
+header .header-container {
+    border-bottom: 2px solid black
+}
+
+.main-container .weather-container{
+    grid-area: weather;
+    background-color: aquamarine;
+    border: 2px solid black;
+}
+.main-container .saved-locations-container{
+    background-color: rgb(127, 172, 255);
+    border: 2px solid black;
+    margin-top:15px;
+    grid-area: locations;
+}
+.main-container .map-container{
+    border: 2px solid black;
+    grid-area: map;
+}
+
+
+
+
+
+/* HELPERS */
+
+/* Main-Layout */
+
+.main-layout {
+    max-width: 1120px;
+    margin: 0 auto
+}
+
+
+/* Flex */
+
+.flex {
+    display: flex;
+}
+
+.flex.space-between{
+    justify-content: space-between;
+}
+
+.flex.align-center{
+    align-items: center;
+}
+
