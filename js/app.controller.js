@@ -7,13 +7,14 @@ import { mapService } from "./services/map.service.js";
 
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
-window.onPanTo = onPanTo;
 window.renderLocations = renderLocations;
 window.onGo = onGo;
 window.onDelete = onDelete;
 window.onMyLocation = onMyLocation;
 window.onSearch = onSearch;
 window.onCopy = onCopy;
+
+let gCurrLoc
 
 // renderLocations([{ name: 'rrrr', lat: '40', lng: '30' id:11}])
 
@@ -22,12 +23,13 @@ function onInit() {
     .initMap()
     .then(() => {})
     .catch(() => console.log("Error: cannot init map"));
-  getLocsForDisplay();
+    getLocsForDisplay();
     getQueryParms()
 }
 
 function getQueryParms(){
     const urlSearchParams= new URLSearchParams(window.location.search);
+    if (!urlSearchParams) return
     console.log('queryStrings',queryStrings);
     const queryParams = Object.fromEntries(urlSearchParams.entries())
     const {lat,lng} =queryParams
@@ -45,7 +47,14 @@ function getPosition() {
 function onSearch(ev) {
   ev.preventDefault();
   const term = document.querySelector("input[name=search]").value;
-  mapService.getCoordsFromApi(term).then(mapService.panTo);
+  mapService.getCoordsFromApi(term).then(coords => {
+      mapService.panTo(coords)
+      const {lat,lng} =coords
+      locService.addLocation(term,lat,lng)
+      gCurrLoc = {lat,lng}
+      getLocsForDisplay()
+      
+    });
 }
 
 function onAddMarker() {
@@ -65,22 +74,22 @@ function onMyLocation() {
   getPosition()
     .then((pos) => {
       mapService.panTo(pos.coords.latitude, pos.coords.longitude);
+      gCurrLoc = {lat:pos.coords.latitude,lng:pos.coords.longitude}
     })
     .catch((err) => {
       console.log("err!!!", err);
     });
+    
 }
 
 function onCopy() {
-  const linkSTR = `https://eliyhaoo.github.io/Travel-trip/?lat=32.0749831&lng=34.9120554`;
+    const {lat,lng} =gCurrLoc 
+  const linkSTR = `https://eliyhaoo.github.io/Travel-trip/?lat=${lat}&lng=${lng}`;
   console.log(linkSTR);
-
   navigator.clipboard.writeText(linkSTR);
 }
 
-function onPanTo() {
-  mapService.panTo(35.6895, 139.6917);
-}
+
 
 function renderLocations(locs) {
   let elContainer = document.querySelector(".saved-locations-container");
@@ -95,6 +104,7 @@ function renderLocations(locs) {
 function onGo(id) {
   const { lat, lng } = locService.getCoords(id);
   mapService.panTo(lat, lng);
+  gCurrLoc = {lat,lng}
 }
 function onDelete(id) {
   locService.deleteLoc(id);
