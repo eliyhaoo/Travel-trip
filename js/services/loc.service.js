@@ -30,12 +30,22 @@ function getLocs() {
 
 function _createLoc(name,lat,lng){
     return {
+        id: _makeId(),
         name,
         lat,
         lng,
         createdAt: new Date(),
         updateAt
     }
+}
+
+function _makeId(length = 3) {
+    var txt = ''
+    const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+    for (var i = 0; i < length; i++) {
+        txt += possible.charAt(Math.floor(Math.random() * possible.length))
+    }
+    return txt
 }
 
 

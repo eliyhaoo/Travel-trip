@@ -11,7 +11,7 @@ window.onGo = onGo
 window.onDelete = onDelete
 
 
-renderLocations([{ name: 'rrrr', lat: '40', lng: '30' }])
+// renderLocations([{ name: 'rrrr', lat: '40', lng: '30' id:11}])
 
 function onInit() {
     mapService.initMap()
@@ -19,6 +19,8 @@ function onInit() {
             console.log('Map is ready');
         })
         .catch(() => console.log('Error: cannot init map'));
+    locService.getLocs()
+        .then(res => renderLocations(res))
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -66,7 +68,7 @@ function renderLocations(locs) {
     let strHTML = ''
     locs.forEach(location => {
         strHTML += `<li>${location.name} x:${location.lat}  y:${location.lng}
-        <button onclick="onGo()">go!</button>  <button onclick="onDelete(location.id)">delete</button></li>`
+        <button onclick="onGo()">go!</button>  <button onclick="onDelete(${location.id})">delete</button></li>`
         console.log(location.name)
     })
     eldiv.innerHTML = strHTML
