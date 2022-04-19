@@ -16,9 +16,9 @@ renderLocations([{ name: 'rrrr', lat: '40', lng: '30' }])
 function onInit() {
     mapService.initMap()
         .then(() => {
-            console.log('Map is ready');
         })
         .catch(() => console.log('Error: cannot init map'));
+        getLocsForDisplay()
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -37,12 +37,10 @@ function onAddMarker() {
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
 }
 
-function onGetLocs() {
+function getLocsForDisplay() {
+    console.log('getting display');
     locService.getLocs()
-        .then(locs => {
-            console.log('Locations:', locs)
-            document.querySelector('.locs').innerText = JSON.stringify(locs)
-        })
+        .then(renderLocations)
 }
 
 function onGetUserPos() {
@@ -66,17 +64,18 @@ function renderLocations(locs) {
     let strHTML = ''
     locs.forEach(location => {
         strHTML += `<li>${location.name} x:${location.lat}  y:${location.lng}
-        <button onclick="onGo()">go!</button>  <button onclick="onDelete(location.id)">delete</button></li>`
-        console.log(location.name)
+        <button onclick="onGo()" >go!</button>  <button onclick="onDelete('${location.id}')">delete</button></li>`
+       
     })
-    eldiv.innerHTML = strHTML
+    elContainer.innerHTML = strHTML
 }
 
 function onGo() {
     console.log(1)
 }
 function onDelete(id) {
+    console.log('deleting..');
     locService.deleteLoc(id)
     locService.getLocs()
-        .then(res => renderLocations(res))
+        .then(renderLocations)
 }
