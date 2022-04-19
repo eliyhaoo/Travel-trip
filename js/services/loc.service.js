@@ -6,15 +6,9 @@ export const locService = {
 }
 
 
-<<<<<<< HEAD
-let locs = [
-    { name: 'Greatplace', lat: 32.047104, lng: 34.832384 }, 
-    { name: 'Neveragain', lat: 32.047201, lng: 34.832581 }
-=======
 const locs = [
     {id:77, name: 'Greatplace', lat: 32.047104, lng: 34.832384 }, 
     { id:88, name: 'Neveragain', lat: 32.047201, lng: 34.832581}
->>>>>>> 194487f66443a929987f2970e5a99ccf627f70cf
 ]
 // locs = storageService.loadFromStorage()
 
