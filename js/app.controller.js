@@ -11,8 +11,9 @@ window.onPanTo = onPanTo;
 window.renderLocations = renderLocations;
 window.onGo = onGo;
 window.onDelete = onDelete;
-window.onMyLocation =onMyLocation;
-window.onSearch=onSearch;
+window.onMyLocation = onMyLocation;
+window.onSearch = onSearch;
+window.onCopy = onCopy;
 
 // renderLocations([{ name: 'rrrr', lat: '40', lng: '30' id:11}])
 
@@ -22,6 +23,9 @@ function onInit() {
     .then(() => {})
     .catch(() => console.log("Error: cannot init map"));
   getLocsForDisplay();
+  const {lat,lng}= new URLSearchParams(window.location.search);
+  console.log(lat,lng);
+  mapService.panTo(lat,lng)
 }
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
@@ -31,11 +35,10 @@ function getPosition() {
   });
 }
 
-function onSearch(ev){
-    ev.preventDefault()
-    const term = document.querySelector('input[name=search]').value
-    mapService.getCoordsFromApi(term)
-    .then(mapService.panTo)
+function onSearch(ev) {
+  ev.preventDefault();
+  const term = document.querySelector("input[name=search]").value;
+  mapService.getCoordsFromApi(term).then(mapService.panTo);
 }
 
 function onAddMarker() {
@@ -54,11 +57,17 @@ function getLocsForDisplay() {
 function onMyLocation() {
   getPosition()
     .then((pos) => {
-        mapService.panTo(pos.coords.latitude,pos.coords.longitude)
+      mapService.panTo(pos.coords.latitude, pos.coords.longitude);
     })
     .catch((err) => {
       console.log("err!!!", err);
     });
+}
+
+function onCopy() {
+  const linkSTR = `https://eliyhaoo.github.io/Travel-trip/`;
+
+  navigator.clipboard.writeText(linkSTR);
 }
 
 function onPanTo() {
